@@ -18,9 +18,9 @@
 
 @interface StarRateView : UIView
 
-@property (nonatomic,copy) NSString *foreground_star_image_name;
+@property (nonatomic,strong) UIImage *foreground_star_image;
 
-@property (nonatomic,copy) NSString *background_star_image_name;
+@property (nonatomic,strong) UIImage *background_star_image;
 
 @property (nonatomic,assign) CGFloat scorePercent; /**< 得分值*/
 
@@ -32,6 +32,6 @@
 
 @property (nonatomic,weak) id<StarRateViewDelegate> delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame numberOfStars:(NSUInteger)numberOfStars;
+- (instancetype)initWithFrame:(CGRect)frame numberOfStars:(NSUInteger)numberOfStars backgroundImage:(UIImage *)backgroundImage foregroundImage:(UIImage *)foregroundImage;
 
 @end

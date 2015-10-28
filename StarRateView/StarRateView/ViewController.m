@@ -21,15 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    StarRateView *star = [[StarRateView alloc] initWithFrame:CGRectMake(10, 30, [UIScreen mainScreen].bounds.size.width - 60, 23) numberOfStars:8];
-    
-    
-//    StarRateView *star = [[StarRateView alloc] init];
-//    star.frame = CGRectMake(10, 30, [UIScreen mainScreen].bounds.size.width - 60, 23);
-    
-    star.scorePercent = 8;
-//    star.allowIncompleteStar = YES;
+    StarRateView *star = [[StarRateView alloc] initWithFrame:CGRectMake(10, 30, [UIScreen mainScreen].bounds.size.width - 60, 23) numberOfStars:8 backgroundImage:[UIImage imageNamed:@"store_detail_store_star_no"] foregroundImage:[UIImage imageNamed:@"store_detail_store_star_yes"]];
+    star.scorePercent = 7.4;
+    star.allowIncompleteStar = YES;
     star.hasAnimation = YES;
     star.delegate = self;
     [self.view addSubview:star];
@@ -38,24 +32,6 @@
 
 - (void)starRateView:(StarRateView *)starRateView sorcePercentDidChange:(CGFloat)newSorcePercent{
     NSLog(@"%f",newSorcePercent);
-}
-
-- (StarRateView *)star{
-    if (!_star) {
-        _star = [[StarRateView alloc] init];
-        _star.allowIncompleteStar = YES;
-        _star.hasAnimation = YES;
-        _star.delegate = self;
-    }
-    return _star;
-}
-
-- (void)viewWillLayoutSubviews{
-    [super viewWillLayoutSubviews];
-    
-    
-    self.star.frame = CGRectMake(10, 30, [UIScreen mainScreen].bounds.size.width - 60, 23);
-    
 }
 
 @end

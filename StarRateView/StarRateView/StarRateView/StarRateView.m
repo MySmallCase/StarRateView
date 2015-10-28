@@ -33,15 +33,15 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-     return [self initWithFrame:frame numberOfStars:DEFALUT_STAR_NUMBER];
+     return [self initWithFrame:frame numberOfStars:DEFALUT_STAR_NUMBER backgroundImage:nil foregroundImage:nil];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame numberOfStars:(NSUInteger)numberOfStars{
+- (instancetype)initWithFrame:(CGRect)frame numberOfStars:(NSUInteger)numberOfStars backgroundImage:(UIImage *)backgroundImage foregroundImage:(UIImage *)foregroundImage{
     self = [super initWithFrame:frame];
     if (self) {
         self.numberOfStars = numberOfStars;
-        self.background_star_image_name = @"b27_icon_star_gray";
-        self.foreground_star_image_name = @"b27_icon_star_yellow";
+        self.background_star_image = backgroundImage;
+        self.foreground_star_image = foregroundImage;
         [self buildDataAndUI];
     }
     return self;
@@ -53,28 +53,21 @@
     self.hasAnimation = NO;
     self.allowIncompleteStar = NO;
     
-    self.foregroundStarView = [self createStarViewWithImage:self.foreground_star_image_name];
-    self.backgroundStarView = [self createStarViewWithImage:self.background_star_image_name];
+    self.foregroundStarView = [self createStarViewWithImage:self.foreground_star_image];
+    self.backgroundStarView = [self createStarViewWithImage:self.background_star_image];
     
     [self addSubview:self.backgroundStarView];
     [self addSubview:self.foregroundStarView];
     
-    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapRateView:)];
     tapGesture.numberOfTapsRequired = 1;
     [self addGestureRecognizer:tapGesture];
-    
 }
 
 - (void)userTapRateView:(UITapGestureRecognizer *)gesture{
     CGPoint tapPoint = [gesture locationInView:self];
     CGFloat offsetX = tapPoint.x;
-    
-    
-    
     CGFloat realStarScore = offsetX / (self.bounds.size.width / self.numberOfStars);
-    
-    
     CGFloat starScore = self.allowIncompleteStar ? realStarScore : ceil(realStarScore);
 //    self.scorePercent = starScore / self.numberOfStars;
     self.scorePercent = starScore;
@@ -83,7 +76,7 @@
 /**
  *  创建星星
  */
-- (UIView *)createStarViewWithImage:(NSString *)imageName{
+- (UIView *)createStarViewWithImage:(UIImage *)image{
   
     UIView *view = [[UIView alloc] initWithFrame:self.bounds];
     view.clipsToBounds = YES;
@@ -93,7 +86,7 @@
     CGFloat StarsH = self.bounds.size.height;
     
     for (int i = 0; i < self.numberOfStars; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.frame = CGRectMake(i * StarsW, 0, StarsW, StarsH);
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:imageView];
